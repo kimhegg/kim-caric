@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kim from Stryn — A Caricature</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    font-family: 'Caveat', cursive;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .scene {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  .title {
+    font-family: 'Permanent Marker', cursive;
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #f8e71c;
+    text-shadow: 3px 3px 0 #e74c3c, 6px 6px 0 rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+    animation: titleDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: #a8a8d8;
+    margin-bottom: 40px;
+    animation: fadeIn 1s 0.3s both;
+  }
+
+  @keyframes titleDrop {
+    from { transform: translateY(-60px) rotate(-3deg); opacity: 0; }
+    to { transform: translateY(0) rotate(0); opacity: 1; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* The main illustration canvas */
+  .illustration {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(180deg, #16213e 0%, #1a1a2e 40%, #0f3460 100%);
+    border-radius: 20px;
+    border: 4px solid #f8e71c;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 100px rgba(15, 52, 96, 0.3);
+    animation: fadeIn 1s 0.5s both;
+  }
+
+  /* Mountains of Stryn in background */
+  .mountains {
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+  }
+
+  .mountain {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .mountain-1 {
+    left: -5%;
+    border-width: 0 200px 250px 150px;
+    border-color: transparent transparent #2c3e6d transparent;
+  }
+
+  .mountain-2 {
+    left: 15%;
+    border-width: 0 180px 300px 220px;
+    border-color: transparent transparent #354a7e transparent;
+  }
+
+  .mountain-3 {
+    right: 10%;
+    border-width: 0 250px 280px 180px;
+    border-color: transparent transparent #2c3e6d transparent;
+  }
+
+  .mountain-4 {
+    right: -10%;
+    border-width: 0 200px 220px 250px;
+    border-color: transparent transparent #3d5a9e transparent;
+  }
+
+  /* Snow caps */
+  .snow-cap {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .snow-1 {
+    left: 15%;
+    bottom: 62%;
+    border-width: 0 30px 40px 35px;
+    border-color: transparent transparent #e8e8f0 transparent;
+    opacity: 0.7;
+  }
+
+  .snow-2 {
+    right: 22%;
+    bottom: 56%;
+    border-width: 0 35px 45px 30px;
+    border-color: transparent transparent #e8e8f0 transparent;
+    opacity: 0.6;
+  }
+
+  /* Northern lights */
+  .aurora {
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 35%;
+    background: linear-gradient(135deg,
+      rgba(46, 204, 113, 0.1) 0%,
+      rgba(52, 152, 219, 0.15) 30%,
+      rgba(155, 89, 182, 0.1) 60%,
+      rgba(46, 204, 113, 0.08) 100%
+    );
+    filter: blur(30px);
+    border-radius: 50%;
+    animation: aurora 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes aurora {
+    0% { transform: translateX(-20px) scaleY(1); opacity: 0.5; }
+    50% { transform: translateX(20px) scaleY(1.3); opacity: 0.8; }
+    100% { transform: translateX(-10px) scaleY(0.9); opacity: 0.6; }
+  }
+
+  /* Stars */
+  .stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+  }
+
+  .star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+  }
+
+  /* Ground / desk area */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(180deg, #1a1a2e 0%, #12121f 100%);
+  }
+
+  /* The desk */
+  .desk {
+    position: absolute;
+    bottom: 8%;
+    left: 10%;
+    width: 80%;
+    height: 18%;
+    background: linear-gradient(180deg, #5d4037 0%, #4e342e 100%);
+    border-radius: 8px 8px 4px 4px;
+    border-top: 3px solid #795548;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  /* Character - the developer */
+  .character {
+    position: absolute;
+    bottom: 24%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 240px;
+    animation: bobble 3s ease-in-out infinite;
+  }
+
+  @keyframes bobble {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+  }
+
+  /* Head */
+  .head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 100px;
+    background: #fdd9b5;
+    border-radius: 45px 45px 35px 35px;
+    z-index: 3;
+  }
+
+  /* Cap */
+  .hair {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95px;
+    height: 35px;
+    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    border-radius: 50px 50px 10px 10px;
+    z-index: 6;
+  }
+
+  /* Cap brim */
+  .hair::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: -12px;
+    width: 70px;
+    height: 14px;
+    background: linear-gradient(180deg, #2c3e50, #1a252f);
+    border-radius: 30px 30px 8px 8px;
+    transform: rotate(-3deg);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  }
+
+  /* Cap button on top */
+  .hair::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: #1a252f;
+    border-radius: 50%;
+  }
+
+  /* Eyes */
+  .eye {
+    position: absolute;
+    top: 38px;
+    width: 14px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 5;
+  }
+
+  .eye::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background: #2c3e50;
+    border-radius: 50%;
+    animation: lookAround 4s ease-in-out infinite;
+  }
+
+  .eye-left { left: 25px; }
+  .eye-right { right: 25px; }
+
+  @keyframes lookAround {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(2px); }
+    75% { transform: translateX(-2px); }
+  }
+
+  /* Glasses */
+  .glasses {
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 28px;
+    z-index: 6;
+  }
+
+  .lens {
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 26px;
+    border: 2.5px solid #333;
+    border-radius: 8px;
+  }
+
+  .lens-left { left: 5px; }
+  .lens-right { right: 5px; }
+
+  .bridge {
+    position: absolute;
+    top: 8px;
+    left: 35px;
+    width: 10px;
+    height: 2px;
+    background: #333;
+  }
+
+  /* Smile */
+  .mouth {
+    position: absolute;
+    top: 68px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 12px;
+    border-bottom: 3px solid #c0392b;
+    border-radius: 0 0 15px 15px;
+    z-index: 5;
+  }
+
+  /* Beard stubble dots */
+  .beard {
+    position: absolute;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 20px;
+    z-index: 4;
+    background: radial-gradient(circle, #8d6e63 1px, transparent 1px);
+    background-size: 5px 5px;
+    opacity: 0.3;
+  }
+
+  /* Body / hoodie */
+  .body {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 150px;
+    background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
+    border-radius: 30px 30px 10px 10px;
+    z-index: 2;
+  }
+
+  /* Hoodie details */
+  .hoodie-string {
+    position: absolute;
+    top: 5px;
+    width: 2px;
+    height: 25px;
+    background: #ecf0f1;
+    z-index: 3;
+  }
+
+  .hoodie-string-left { left: 48px; }
+  .hoodie-string-right { left: 70px; }
+
+  /* Arms */
+  .arm {
+    position: absolute;
+    top: 110px;
+    width: 35px;
+    height: 100px;
+    background: #2c3e50;
+    border-radius: 15px;
+    z-index: 1;
+  }
+
+  .arm-left {
+    left: 8px;
+    transform: rotate(15deg);
+  }
+
+  .arm-right {
+    right: 8px;
+    transform: rotate(-15deg);
+  }
+
+  /* Hands on keyboard */
+  .hand {
+    position: absolute;
+    bottom: -5px;
+    width: 25px;
+    height: 20px;
+    background: #fdd9b5;
+    border-radius: 10px;
+    animation: typing 0.3s ease-in-out infinite alternate;
+  }
+
+  .hand-left { left: 2px; }
+  .hand-right { right: 2px; animation-delay: 0.15s; }
+
+  @keyframes typing {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+  }
+
+  /* Monitors on desk */
+  .monitor {
+    position: absolute;
+    z-index: 10;
+  }
+
+  .monitor-main {
+    bottom: 26%;
+    left: 30%;
+    width: 180px;
+    height: 110px;
+  }
+
+  .monitor-side {
+    bottom: 28%;
+    right: 12%;
+    width: 120px;
+    height: 80px;
+    transform: perspective(200px) rotateY(-15deg);
+  }
+
+  .monitor-frame {
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+    border: 3px solid #444;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
+  }
+
+  .monitor-stand {
+    width: 30px;
+    height: 15px;
+    background: #555;
+    margin: 0 auto;
+    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  }
+
+  /* Code on screen */
+  .code-screen {
+    padding: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 7px;
+    line-height: 1.5;
+    color: #abb2bf;
+    animation: scrollCode 10s linear infinite;
+  }
+
+  .code-screen .keyword { color: #c678dd; }
+  .code-screen .string { color: #98c379; }
+  .code-screen .func { color: #61afef; }
+  .code-screen .comment { color: #5c6370; font-style: italic; }
+  .code-screen .type { color: #e5c07b; }
+  .code-screen .number { color: #d19a66; }
+
+  @keyframes scrollCode {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-40px); }
+  }
+
+  /* Home Assistant dashboard on side monitor */
+  .ha-screen {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .ha-card {
+    background: #374151;
+    border-radius: 4px;
+    padding: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5px;
+    color: #e5e7eb;
+    text-align: center;
+  }
+
+  .ha-icon {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .ha-value {
+    font-size: 8px;
+    font-weight: bold;
+    color: #f8e71c;
+  }
+
+  /* Floating objects around the character */
+  .floating-item {
+    position: absolute;
+    z-index: 15;
+    font-size: 1.8rem;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(5deg); }
+  }
+
+  .item-docker { top: 15%; left: 8%; animation-delay: 0s; font-size: 1.4rem; }
+  .item-fish { top: 12%; right: 8%; animation-delay: 0.5s; }
+  .item-printer { top: 35%; left: 5%; animation-delay: 1s; font-size: 1.3rem; }
+  .item-gear { top: 8%; left: 45%; animation-delay: 1.5s; }
+  .item-fire { top: 30%; right: 5%; animation-delay: 2s; }
+  .item-server { bottom: 45%; left: 3%; animation-delay: 0.8s; font-size: 1.4rem; }
+  .item-brain { top: 20%; right: 18%; animation-delay: 1.2s; font-size: 1.4rem; }
+
+  /* Vending machine */
+  .vending-machine {
+    position: absolute;
+    bottom: 25%;
+    left: 3%;
+    width: 70px;
+    height: 120px;
+    background: linear-gradient(180deg, #e74c3c 0%, #c0392b 100%);
+    border-radius: 8px 8px 4px 4px;
+    border: 2px solid #922b21;
+    z-index: 8;
+    animation: fadeIn 1s 1s both;
+  }
+
+  .vm-screen {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    height: 35px;
+    background: #1a1a2e;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 5px;
+    color: #2ecc71;
+    text-shadow: 0 0 5px rgba(46, 204, 113, 0.5);
+  }
+
+  .vm-slot {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 20px;
+    background: #111;
+    border-radius: 3px;
+    border: 1px solid #555;
+  }
+
+  .vm-label {
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Permanent Marker', cursive;
+    font-size: 6px;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  .gas-bottles {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+  }
+
+  .gas-bottle {
+    width: 10px;
+    height: 22px;
+    background: linear-gradient(180deg, #3498db, #2980b9);
+    border-radius: 5px 5px 2px 2px;
+    position: relative;
+  }
+
+  .gas-bottle::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 3px;
+    width: 4px;
+    height: 6px;
+    background: #7f8c8d;
+    border-radius: 2px 2px 0 0;
+  }
+
+  /* Server rack on right */
+  .server-rack {
+    position: absolute;
+    bottom: 25%;
+    right: 2%;
+    width: 55px;
+    height: 130px;
+    background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+    border-radius: 4px;
+    border: 2px solid #444;
+    z-index: 8;
+    animation: fadeIn 1s 1.2s both;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 4px;
+    gap: 3px;
+  }
+
+  .rack-unit {
+    width: 100%;
+    height: 14px;
+    background: #333;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+    gap: 2px;
+  }
+
+  .led {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  .led-green { background: #2ecc71; box-shadow: 0 0 4px #2ecc71; }
+  .led-blue { background: #3498db; box-shadow: 0 0 4px #3498db; animation-delay: 0.5s; }
+  .led-orange { background: #e67e22; box-shadow: 0 0 4px #e67e22; animation-delay: 1s; }
+  .led-red { background: #e74c3c; box-shadow: 0 0 4px #e74c3c; animation-delay: 1.5s; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .rack-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 4px;
+    color: #888;
+    margin-left: 2px;
+  }
+
+  /* Thought bubbles */
+  .thought-bubble {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-family: 'Caveat', cursive;
+    font-size: 13px;
+    color: #1a1a2e;
+    z-index: 20;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+
+  .thought-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 8px 0 8px;
+    border-color: rgba(255,255,255,0.95) transparent transparent transparent;
+  }
+
+  .thought-1 {
+    top: 5%;
+    right: 15%;
+    animation: fadeIn 1s 1.5s both, float 4s 1.5s ease-in-out infinite;
+  }
+
+  .thought-2 {
+    top: 42%;
+    left: 20%;
+    animation: fadeIn 1s 2s both, float 4s 2s ease-in-out infinite;
+    font-size: 11px;
+  }
+
+  .thought-3 {
+    bottom: 48%;
+    right: 15%;
+    animation: fadeIn 1s 2.5s both, float 4s 2.5s ease-in-out infinite;
+    font-size: 11px;
+  }
+
+  /* Coffee cup on desk */
+  .coffee {
+    position: absolute;
+    bottom: 19%;
+    left: 22%;
+    z-index: 11;
+  }
+
+  .coffee-cup {
+    width: 20px;
+    height: 18px;
+    background: #ecf0f1;
+    border-radius: 0 0 5px 5px;
+    position: relative;
+  }
+
+  .coffee-handle {
+    position: absolute;
+    right: -8px;
+    top: 3px;
+    width: 8px;
+    height: 10px;
+    border: 2px solid #ecf0f1;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+  }
+
+  .coffee-steam {
+    position: absolute;
+    top: -12px;
+    left: 5px;
+    width: 10px;
+    height: 12px;
+    font-size: 10px;
+    opacity: 0.5;
+    animation: steam 2s ease-in-out infinite;
+    color: #bdc3c7;
+  }
+
+  @keyframes steam {
+    0% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 0.6; transform: translateY(-5px); }
+    100% { opacity: 0.3; transform: translateY(0); }
+  }
+
+  /* Labels section */
+  .labels {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    animation: fadeIn 1s 2s both;
+  }
+
+  .label {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #a8a8d8;
+    white-space: nowrap;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .label:hover {
+    background: rgba(248, 231, 28, 0.15);
+    border-color: #f8e71c;
+    color: #f8e71c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(248, 231, 28, 0.2);
+  }
+
+  .label .emoji { margin-right: 6px; }
+
+  /* Bottom tagline */
+  .tagline {
+    text-align: center;
+    margin-top: 30px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: #a8a8d8;
+    animation: fadeIn 1s 2.5s both;
+    line-height: 1.6;
+  }
+
+  .tagline em {
+    color: #f8e71c;
+    font-style: normal;
+  }
+
+  .tagline .small {
+    display: block;
+    font-size: 1rem;
+    color: #6c6c9c;
+    margin-top: 8px;
+  }
+
+  /* Aquarium on desk */
+  .aquarium {
+    position: absolute;
+    bottom: 19%;
+    right: 18%;
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(52, 152, 219, 0.3), rgba(41, 128, 185, 0.5));
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 3px;
+    z-index: 11;
+    overflow: hidden;
+  }
+
+  .fish-tank {
+    position: absolute;
+    font-size: 10px;
+    animation: swim 3s ease-in-out infinite;
+  }
+
+  .fish-1 { top: 5px; left: 5px; }
+  .fish-2 { top: 15px; left: 18px; animation-delay: 1s; animation-direction: reverse; }
+
+  @keyframes swim {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+  }
+
+  /* 3D printer beside desk */
+  .printer-3d {
+    position: absolute;
+    bottom: 26%;
+    right: 20%;
+    width: 35px;
+    height: 40px;
+    z-index: 9;
+  }
+
+  .printer-frame {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #e67e22;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .printer-head {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 4px;
+    background: #e67e22;
+    border-radius: 2px;
+    animation: printMove 2s ease-in-out infinite;
+  }
+
+  @keyframes printMove {
+    0%, 100% { left: 20%; }
+    50% { left: 70%; }
+  }
+
+  .printer-bed {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    background: #555;
+    border-radius: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <div class="title">🇳🇴 Kim fra Hornindal</div>
+  <div class="subtitle">Solution Architect • Homelabber • Automatiserings-enthusiast</div>
+
+  <div class="illustration">
+    <!-- Aurora / Northern Lights -->
+    <div class="aurora"></div>
+
+    <!-- Stars -->
+    <div class="stars">
+      <div class="star" style="top:8%;left:12%;animation-delay:0.2s"></div>
+      <div class="star" style="top:15%;left:35%;animation-delay:0.8s;width:2px;height:2px"></div>
+      <div class="star" style="top:5%;left:55%;animation-delay:1.2s"></div>
+      <div class="star" style="top:20%;left:75%;animation-delay:0.4s;width:2px;height:2px"></div>
+      <div class="star" style="top:10%;left:88%;animation-delay:1.6s"></div>
+      <div class="star" style="top:25%;left:22%;animation-delay:0.6s;width:2px;height:2px"></div>
+      <div class="star" style="top:3%;left:42%;animation-delay:1s"></div>
+      <div class="star" style="top:18%;left:65%;animation-delay:1.4s"></div>
+    </div>
+
+    <!-- Mountains -->
+    <div class="mountains">
+      <div class="mountain mountain-1"></div>
+      <div class="mountain mountain-2"></div>
+      <div class="mountain mountain-3"></div>
+      <div class="mountain mountain-4"></div>
+      <div class="snow-cap snow-1"></div>
+      <div class="snow-cap snow-2"></div>
+    </div>
+
+    <!-- Floating Items -->
+    <div class="floating-item item-docker">🐳</div>
+    <div class="floating-item item-fish">🐟</div>
+    <div class="floating-item item-printer">🖨️</div>
+    <div class="floating-item item-gear">⚙️</div>
+    <div class="floating-item item-fire">🔥</div>
+    <div class="floating-item item-server">🗄️</div>
+    <div class="floating-item item-brain">🧠</div>
+
+    <!-- Thought Bubbles -->
+    <div class="thought-bubble thought-1">
+      "Hmm... semaphore deadlock<br>or race condition? 🤔"
+    </div>
+    <div class="thought-bubble thought-2">
+      "200+ smart home<br>devices and counting..."
+    </div>
+    <div class="thought-bubble thought-3">
+      "Ember Booking<br>needs one more feature..."
+    </div>
+
+    <!-- Vending Machine -->
+    <div class="vending-machine">
+      <div class="vm-screen">
+        VENDANOR v3.2<br>
+        ✓ READY<br>
+        GAS: 12 | WASH: 8
+      </div>
+      <div class="gas-bottles">
+        <div class="gas-bottle"></div>
+        <div class="gas-bottle"></div>
+        <div class="gas-bottle"></div>
+        <div class="gas-bottle"></div>
+      </div>
+      <div class="vm-label">VENDANOR</div>
+      <div class="vm-slot"></div>
+    </div>
+
+    <!-- Ground -->
+    <div class="ground"></div>
+
+    <!-- Desk -->
+    <div class="desk"></div>
+
+    <!-- Coffee -->
+    <div class="coffee">
+      <div class="coffee-steam">~</div>
+      <div class="coffee-cup">
+        <div class="coffee-handle"></div>
+      </div>
+    </div>
+
+    <!-- Aquarium -->
+    <div class="aquarium">
+      <div class="fish-tank fish-1">🐠</div>
+      <div class="fish-tank fish-2">🐡</div>
+    </div>
+
+    <!-- Main Monitor -->
+    <div class="monitor monitor-main">
+      <div class="monitor-frame">
+        <div class="code-screen">
+          <span class="comment">// PLC Communication Service</span><br>
+          <span class="keyword">public async</span> <span class="type">Task</span> <span class="func">SendCommand</span>()<br>
+          {<br>
+          &nbsp;&nbsp;<span class="keyword">await</span> _semaphore.<span class="func">WaitAsync</span>();<br>
+          &nbsp;&nbsp;<span class="keyword">try</span> {<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span> result = <span class="keyword">await</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_plc.<span class="func">ReadTag</span>(<span class="string">"Status"</span>);<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="func">UpdateState</span>(result);<br>
+          &nbsp;&nbsp;}<br>
+          <span class="comment">// TODO: fix ObjectDisposed</span><br>
+          <span class="keyword">await</span> <span class="func">TrainModel</span>(<br>
+          &nbsp;&nbsp;images, <span class="type">epochs</span>=<span class="number">50</span>);<br>
+          <span class="comment"># PyTorch CV pipeline</span><br>
+          <span class="keyword">model</span> = <span class="func">ResNet</span>(<span class="number">18</span>)<br>
+        </div>
+      </div>
+      <div class="monitor-stand"></div>
+    </div>
+
+    <!-- Side Monitor with HA Dashboard -->
+    <div class="monitor monitor-side">
+      <div class="monitor-frame">
+        <div class="ha-screen">
+          <div class="ha-card">
+            <div class="ha-icon">💡</div>
+            <div class="ha-value">47</div>
+            <div>lights</div>
+          </div>
+          <div class="ha-card">
+            <div class="ha-icon">🌡️</div>
+            <div class="ha-value">22°</div>
+            <div>inne</div>
+          </div>
+          <div class="ha-card">
+            <div class="ha-icon">🔒</div>
+            <div class="ha-value">OK</div>
+            <div>locks</div>
+          </div>
+          <div class="ha-card">
+            <div class="ha-icon">📦</div>
+            <div class="ha-value">8</div>
+            <div>proxmox</div>
+          </div>
+          <div class="ha-card">
+            <div class="ha-icon">🌊</div>
+            <div class="ha-value">pH 7</div>
+            <div>akvarie</div>
+          </div>
+          <div class="ha-card">
+            <div class="ha-icon">📡</div>
+            <div class="ha-value">UP</div>
+            <div>pi-hole</div>
+          </div>
+        </div>
+      </div>
+      <div class="monitor-stand"></div>
+    </div>
+
+    <!-- 3D Printer -->
+    <div class="printer-3d">
+      <div class="printer-frame">
+        <div class="printer-head"></div>
+        <div class="printer-bed"></div>
+      </div>
+    </div>
+
+    <!-- Character -->
+    <div class="character">
+      <div class="hair"></div>
+      <div class="head">
+        <div class="eye eye-left"></div>
+        <div class="eye eye-right"></div>
+        <div class="glasses">
+          <div class="lens lens-left"></div>
+          <div class="lens lens-right"></div>
+          <div class="bridge"></div>
+        </div>
+        <div class="mouth"></div>
+        <div class="beard"></div>
+      </div>
+      <div class="body">
+        <div class="hoodie-string hoodie-string-left"></div>
+        <div class="hoodie-string hoodie-string-right"></div>
+      </div>
+      <div class="arm arm-left">
+        <div class="hand hand-left"></div>
+      </div>
+      <div class="arm arm-right">
+        <div class="hand hand-right"></div>
+      </div>
+    </div>
+
+    <!-- Server Rack (Homelab) -->
+    <div class="server-rack">
+      <div class="rack-unit">
+        <div class="led led-green"></div>
+        <div class="led led-blue"></div>
+        <span class="rack-label">PROXMOX</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-green"></div>
+        <div class="led led-green"></div>
+        <span class="rack-label">JELLYFIN</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-blue"></div>
+        <div class="led led-orange"></div>
+        <span class="rack-label">IMMICH</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-green"></div>
+        <div class="led led-blue"></div>
+        <span class="rack-label">*ARR</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-green"></div>
+        <div class="led led-green"></div>
+        <span class="rack-label">PI-HOLE</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-orange"></div>
+        <div class="led led-red"></div>
+        <span class="rack-label">DOCKER</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-green"></div>
+        <div class="led led-blue"></div>
+        <span class="rack-label">HA</span>
+      </div>
+      <div class="rack-unit">
+        <div class="led led-blue"></div>
+        <div class="led led-green"></div>
+        <span class="rack-label">VAULT</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill Tags -->
+  <div class="labels">
+    <div class="label"><span class="emoji">⚡</span>.NET / C#</div>
+    <div class="label"><span class="emoji">🐍</span>Python / PyTorch</div>
+    <div class="label"><span class="emoji">⚛️</span>React / Angular</div>
+    <div class="label"><span class="emoji">🐘</span>PostgreSQL</div>
+    <div class="label"><span class="emoji">🏭</span>EtherNet/IP & PLCs</div>
+    <div class="label"><span class="emoji">🐳</span>Docker / Azure</div>
+    <div class="label"><span class="emoji">🏠</span>Home Assistant (200+)</div>
+    <div class="label"><span class="emoji">🖥️</span>Proxmox Homelab</div>
+    <div class="label"><span class="emoji">🔥</span>Ember Booking</div>
+    <div class="label"><span class="emoji">👁️</span>Computer Vision</div>
+    <div class="label"><span class="emoji">🖨️</span>3D Printing</div>
+    <div class="label"><span class="emoji">🐠</span>Aquariums</div>
+  </div>
+
+  <div class="tagline">
+    By day: making vending machines <em>think</em>. 🤖<br>
+    By night: making his entire house <em>think</em>. 🏠<br>
+    On weekends: building Ember Booking to make <em>businesses</em> think. 🔥
+    <span class="small">
+      "Why automate one thing when you can automate everything?"<br>
+      — The unofficial motto of a man with 200+ smart home devices
+    </span>
+  </div>
+</div>
+
+</body>
+</html>
